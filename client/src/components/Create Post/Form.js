@@ -1,7 +1,5 @@
 import React from 'react';
-import { Box, Paper, TextField, Typography, Button } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import { padding } from '@mui/system';
+import { Paper, TextField, Typography, Button } from "@mui/material";
 import { useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import FileBase from "react-file-base64";
@@ -35,7 +33,6 @@ const Form = () => {
             marginRight: "auto",
             marginTop: "auto",
             marginButtom: "auto",
-            // border: " 1px solid red",
             paddingTop: "5%",
         },
 
@@ -86,15 +83,4 @@ const Form = () => {
     )
 }
 
-export default Form
-
-
-
-
-
-// elevation={12}
-// style={{
-//     padding: 8,
-//     backgroundColor: "white",
-//     border: "1px solid black"
-// }}
+export default Form;
