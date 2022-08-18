@@ -1,15 +1,10 @@
 import React from "react";
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 
 
 
@@ -18,14 +13,23 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const Navbar = () => {
 
+    const dispatch = useDispatch();
+    const location = useLocation();
 
 
+    var [user, setUser] = React.useState(JSON.parse(localStorage.getItem("profile")));
+    
 
-    const reDiToCreate = () => {
-        console.log("Button Click to go create");
+    React.useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem("profile")))
+ 
 
+    }, [location])
+    
+    const handleLogOut = () => {
+        dispatch({ type: "LOGOUT" });
+        setUser(null);
     }
-
 
     return (
         <>
@@ -37,14 +41,22 @@ const Navbar = () => {
 
 
 
-                    <Router>
-                        <div>
-                            <Link to="/posts/create">
-                                <Button color="secondary"> Create Post </Button>
-                            </Link>
-                        </div>
-                    </Router>
 
+                    <div>
+                        <Link to="/posts/create">
+                            <Button color="secondary"> Create Post </Button>
+                        </Link>
+                    </div>
+
+                    <div>
+                        <Link to="/user/auth">
+                            <Button color="secondary"> Log in </Button>
+                        </Link>
+                    </div>
+
+                    <Button color="secondary" onClick={handleLogOut}> Log out </Button>
+
+                    <div> { user && (user.result.name) } </div>
 
 
 

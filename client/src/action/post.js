@@ -1,6 +1,4 @@
 import * as API from "../api/API.js";
-import store from "../store.js";
-
 
 export const getAllPost = () => async (dispatch) => {
     try {

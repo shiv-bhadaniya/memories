@@ -6,7 +6,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Input = ({ name, handleChange, label, half, autoFocus, type, handleShowPassword }) => {
 
-    console.log(type);
+
 
     return (
         <Grid item xs={12} sm={half ? 6 : 12}>

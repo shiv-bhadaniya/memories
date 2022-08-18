@@ -5,7 +5,10 @@ import "dotenv/config"
 
 
 import postRoutes from "./routes/post.js";
+import authRouter from "./routes/auth.js";
+
 import bodyParser from "body-parser";
+
 
 const app = express();
 app.use(cors());
@@ -13,7 +16,13 @@ app.use(cors());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
+
+
+
 app.use("/posts", postRoutes);
+app.use("/user", authRouter)
+
+
 
 const PORT = process.env.PORT;
 const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;

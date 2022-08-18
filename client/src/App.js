@@ -12,12 +12,12 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Posts />} />
           <Route path="/posts/create" element={<Form />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/user/auth" element={<Auth />} />
         </Routes>
 
       </BrowserRouter>

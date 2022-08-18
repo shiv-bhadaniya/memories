@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, TextField, Typography, Button } from "@mui/material";
 import { useDispatch } from 'react-redux';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FileBase from "react-file-base64";
 
 
@@ -10,6 +10,8 @@ import FileBase from "react-file-base64";
 import { createNewPost, getAllPost } from '../../action/post';
 
 const Form = () => {
+
+
 
     const [postData, setPostData] = React.useState({
         title: "",
@@ -20,6 +22,20 @@ const Form = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+
+
+    var [user, setUser] = React.useState(JSON.parse(localStorage.getItem("profile")));
+    
+
+    React.useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem("profile")))
+
+        if(!user) {
+            navigate("/user/auth");
+        }
+    }, [])
 
     const myStyle = {
 

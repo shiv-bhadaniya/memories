@@ -11,9 +11,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { red } from '@mui/material/colors';
-import Icon from "./icon";
 import Input from "./Input";
-// import { signup, signin } from "../../action/auth";
+import { signin, signup } from "../../action/auth";
 
 const initialState = {
     firstName: "",
@@ -29,6 +28,7 @@ const Auth = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialState);
+    const [passwordSame, setPasswordSame] = useState(0);
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -37,11 +37,11 @@ const Auth = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // if (isSignup) {
-        //   dispatch(signup(formData, navigate));
-        // } else {
-        //   dispatch(signin(formData, navigate));
-        // }
+        if (isSignup) {
+          dispatch(signup(formData, navigate));
+        } else {
+            dispatch(signin(formData, navigate));
+        }
     };
 
     const handleChange = (e) => {
