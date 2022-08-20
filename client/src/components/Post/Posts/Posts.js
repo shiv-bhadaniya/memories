@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CircularProgress, Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getAllPost } from "../../../action/post";
-import store from "../../../store";
 import Post from "./Post/Post";
 
 
-const Posts = () => {
+const Posts = ({setCurrentId}) => {
 
-    const dispatch = useDispatch();
+
 
 
     const currnetAllPosts = useSelector((state) => state.postReducer);
+    console.log("current ALl post ", currnetAllPosts);
     
-    
-    useEffect(() => {
-        dispatch(getAllPost());
-    }, [])
     
 
     const myStyle = {
@@ -27,15 +22,13 @@ const Posts = () => {
     }
 
 
-
-
     return (     
             currnetAllPosts.length ? (
             <Grid  spacing={3} container alignItems="stretch">
                 {currnetAllPosts.map((post) => (
                     // md = big, xs = small, sm = medium
                     <Grid style={myStyle.myMargin} key={post._id} item xs={12} sm={6} md={3}>
-                        <Post post={post} />
+                        <Post post={post} setCurrentId={setCurrentId} />
                     </Grid>
                 ))}
             </Grid>
