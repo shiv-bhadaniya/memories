@@ -24,9 +24,11 @@ export const createNewPost = (newPostData) => baseAPI.post("/posts/create", newP
 export const updatePost = (id, updatePostData) => baseAPI.patch(`/posts/update/${id}`, updatePostData);
 export const likePost = (id) => baseAPI.patch(`/posts/like/${id}`);
 export const deletePost = (id) => baseAPI.delete(`/posts/delete/${id}`); 
-
-
+export const getOnePostDetails = (id) => baseAPI.get(`/posts/post/${id}`);
 
 
 export const signup = (newUserData) => baseAPI.post("/user/auth/signup", newUserData);
 export const signin = (userData) => baseAPI.post("/user/auth/signin", userData);
+
+
+export const getUserProfile = (id) => baseAPI.get(`/user/profile/${id}`);

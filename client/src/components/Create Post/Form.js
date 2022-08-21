@@ -90,10 +90,10 @@ const Form = ({currentId, setCurrentId}) => {
         
         if(checkPost) {
             console.log("Call update post");
-            dispatch(updatePost(currentId, postData));
+            dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
         } else {
             console.log("Call new post ");
-            dispatch(createNewPost(postData));
+            dispatch(createNewPost({...postData, name: user?.result?.name}));
         }
         
         dispatch(getAllPost());

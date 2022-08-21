@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CircularProgress, Grid } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Post from "./Post/Post";
+import { getAllPost } from "../../../action/post";
 
 
 const Posts = ({setCurrentId}) => {
 
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(getAllPost());
+    }, [])
 
 
     const currnetAllPosts = useSelector((state) => state.postReducer);

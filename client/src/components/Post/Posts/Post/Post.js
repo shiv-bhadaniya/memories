@@ -6,10 +6,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import moment from "moment";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { deletePost, getAllPost, likePost } from '../../../../action/post';
-
+import { deletePost, getAllPost, getOnePostDetails, likePost } from '../../../../action/post';
+import { blue } from '@mui/material/colors';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import { getUserProfile } from "../../../../action/user.js";
 
 const Post = ({ post, setCurrentId }) => {
 
@@ -98,18 +100,29 @@ const Post = ({ post, setCurrentId }) => {
 
   }
 
+  const handleMessageClick = () => {
+    dispatch(getOnePostDetails(post._id));
+    navigate(`/posts/post/${post._id}`)
+    
+  }
+
+  const handleNameButton = () => {
+    dispatch(getUserProfile(post.creator));
+    navigate(`/user/profile/${post.creator}`);
+  }
+
 
   const Likes = () => {
     if (likes.length > 0) {
       return likes.find(oneLike => oneLike === userId)
         ? (
-          <> <ThumbUpIcon fontSize='small' /> </>
+          <> <ThumbUpIcon fontSize='medium' /> </>
         ) : (
-          <> <ThumbUpOffAltIcon fontSize='small' /> </>
+          <> <ThumbUpOffAltIcon fontSize='medium' /> </>
         )
     }
 
-    return <> <ThumbUpOffAltIcon fontSize='small' /></>
+    return <> <ThumbUpOffAltIcon fontSize='medium' /></>
   }
 
 
@@ -123,7 +136,7 @@ const Post = ({ post, setCurrentId }) => {
         <CardMedia style={myStyle.cardMedia} image={post.selectedFile} title={post.title} />
 
         <div style={myStyle.overlay}>
-          <Typography variant='h6' >{post.name}</Typography>
+          <Typography variant='h6' onClick={handleNameButton} sx={{ cursor: "pointer" }}>{post.name}</Typography>
           <Typography variant='body2' >{moment(post.createdAt).fromNow()}</Typography>
         </div>
 
@@ -140,7 +153,7 @@ const Post = ({ post, setCurrentId }) => {
         <Typography style={myStyle.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
 
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+          <Typography variant="body2" color="textSecondary" component="p" >{  post.message.slice(0, 300) }  {post.message.length > 300 && <><Typography  onClick={handleMessageClick} sx={{ color: blue[500], cursor: "pointer" }} > Read More..... </Typography></> }  </Typography>
 
 
         </CardContent>
@@ -152,10 +165,14 @@ const Post = ({ post, setCurrentId }) => {
           </Button>
 
           <Button size="small" color="primary" disabled={!user?.result}>
-            <ThumbDownOffAltIcon fontSize="small" />&nbsp;Dislike
+            <ThumbDownOffAltIcon fontSize="medium" />
           </Button>
 
-          {post.creator === user?.result._id && (<Button size="small" color="primary" onClick={handleDeletePost} >  <DeleteIcon fontSize="default" />  <span style={{ marginTop: "3px" }}>&nbsp; Delete</span> </Button>)}
+          <Button size="small" color="primary" disabled={!user?.result} >
+              <BookmarkAddIcon fontSize="medium" />
+          </Button>
+
+          {post.creator === user?.result._id && (<Button size="small" color="primary" onClick={handleDeletePost} >  <DeleteIcon fontSize="medium" /> </Button>)}
 
 
 
@@ -166,4 +183,6 @@ const Post = ({ post, setCurrentId }) => {
   )
 }
 
-export default Post
+{/* <Link to={`/posts/post/${post._id}`}> read more...</Link> */}
+
+export default Post;

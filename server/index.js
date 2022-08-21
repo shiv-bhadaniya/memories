@@ -6,6 +6,8 @@ import "dotenv/config"
 
 import postRoutes from "./routes/post.js";
 import authRouter from "./routes/auth.js";
+import userProfileRouter from "./routes/userProfileRoutes.js"; 
+
 
 import bodyParser from "body-parser";
 
@@ -21,6 +23,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/posts", postRoutes);
 app.use("/user", authRouter)
+app.use("/user/profile", userProfileRouter);
 
 
 

@@ -18,6 +18,7 @@ export const getAllPosts = async (req, res) => {
 export const createPost = async (req, res) => {
 
     const newPostData = req.body;
+    // console.log("name". req.name);
 
     const newPostMessage = new PostMessage({
         ...newPostData,
@@ -107,6 +108,23 @@ export const deletePost = async (req, res) => {
         res.send(error);
     }
 }
+
+
+export const getOnePostDetails = async(req,res) => {
+
+
+    const { id } = req.params;
+
+    try {
+        const onePostMessage = await PostMessage.findById(id);
+        res.status(200).json(onePostMessage);
+    } catch (error) {
+        res.send(error)
+    }
+}
+
+
+
 
 
 export default router;
