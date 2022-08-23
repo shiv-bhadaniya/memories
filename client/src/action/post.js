@@ -33,16 +33,20 @@ export const updatePost = (id, updatePostData) => async(dispatch) => {
 export const likePost = (id) => async(dispatch) => {
 
     try {
-        
-        console.log("Before call to api of like");
+
+        console.log("Before like calling : ");
+
         const { data } = await API.likePost(id);
-        console.log(" After like exexute ", data);
+        
+        console.log("after like calling : ", data);
+
 
         dispatch( {type: "LIKE", payload: data});
     } catch (error) {
         console.log(error);
     }
 }
+
 
 export const deletePost = (id) => async(dispatch) => {
 
@@ -55,6 +59,7 @@ export const deletePost = (id) => async(dispatch) => {
         console.log(error);
     }
 }
+
 
 
 export const getOnePostDetails = (id) => async(dispatch) => {

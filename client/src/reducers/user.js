@@ -1,8 +1,11 @@
-const userReducer = ( state = {userData : null}, action) => {
+const userReducer = (state = { userData: null }, action) => {
 
     switch (action.type) {
-        case "USER_PROFILE":
-            return {...state, userData : action?.payload};
+        case "SAVE_POST":
+            console.log("Save post Reducer");
+            return { ...state, userData: action.payload }
+        case "FOLLOW_USER":
+            return { ...state, userData: action.payload }
         default:
             return state;
     }

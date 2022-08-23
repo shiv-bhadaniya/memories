@@ -13,5 +13,4 @@ router.delete("/delete/:id", auth, deletePost);
 router.get("/post/:id", getOnePostDetails);
 
 
-
 export default router;

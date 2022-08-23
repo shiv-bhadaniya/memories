@@ -3,17 +3,27 @@ import { Card, CardActions, CardContent, CardMedia, Typography, Button } from '@
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import moment from "moment";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, getAllPost, getOnePostDetails, likePost } from '../../../../action/post';
 import { blue } from '@mui/material/colors';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import { getUserProfile } from "../../../../action/user.js";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import {  savePost } from "../../../../action/user.js";
+import { getUserProfile } from "../../../../action/userDetails";
 
 const Post = ({ post, setCurrentId }) => {
+
+
+
+  // ------------------------------------------------------------------    Hook     -------------------------------------------------------------------------
+
+
+
+
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,6 +33,21 @@ const Post = ({ post, setCurrentId }) => {
 
   const [likes, setLikes] = useState(post.likes);
   const hasLikedPost = post?.likes?.find((like) => like === userId);
+
+
+  var currentUserAllData = useSelector((state) => state.userReducer);
+
+  var currentUserAllSavedPost = currentUserAllData?.userData?.savedPost;
+
+  var currentUserSavedPostFromLocalStorage = user?.result?.savedPost;
+
+
+
+
+  //--------------------------------------------------------------------    Style    -------------------------------------------------------------------------- 
+
+
+
 
 
 
@@ -70,7 +95,25 @@ const Post = ({ post, setCurrentId }) => {
       display: 'flex',
       justifyContent: 'space-between',
     },
+
+    spanStyle: {
+      marginLeft: '10px',
+      marginTop: '5px'
+    }
   }
+
+
+
+
+
+
+
+
+  // --------------------------------------------------------------------   event handle    ----------------------------------------------------------------------------------------
+
+
+
+
 
 
   const handleUpdate = () => {
@@ -80,7 +123,7 @@ const Post = ({ post, setCurrentId }) => {
   }
 
   const handleLikeButton = () => {
-    console.log("Like button click. ");
+
     dispatch(likePost(post._id))
 
     if (hasLikedPost) {
@@ -88,11 +131,10 @@ const Post = ({ post, setCurrentId }) => {
     } else {
       setLikes([...post.likes, userId]);
     }
-    
+
     dispatch(getAllPost());
 
   }
-
 
 
   const handleDeletePost = () => {
@@ -103,7 +145,7 @@ const Post = ({ post, setCurrentId }) => {
   const handleMessageClick = () => {
     dispatch(getOnePostDetails(post._id));
     navigate(`/posts/post/${post._id}`)
-    
+
   }
 
   const handleNameButton = () => {
@@ -112,18 +154,63 @@ const Post = ({ post, setCurrentId }) => {
   }
 
 
+  const handleSavePost = () => {
+    dispatch(savePost(post._id));
+    dispatch(getAllPost());
+
+  }
+
+
+
+
+
+  // ------------------------------------------------------------------------   component    ----------------------------------------------------------------------------------------
+
+
+
+
+
+
   const Likes = () => {
     if (likes.length > 0) {
       return likes.find(oneLike => oneLike === userId)
-        ? (
-          <> <ThumbUpIcon fontSize='medium' /> </>
-        ) : (
-          <> <ThumbUpOffAltIcon fontSize='medium' /> </>
+        && (
+          <> <ThumbUpIcon fontSize='medium' /><span style={myStyle.spanStyle} > {likes.length} </span></>
         )
     }
 
-    return <> <ThumbUpOffAltIcon fontSize='medium' /></>
+    return <> <ThumbUpOffAltIcon fontSize='medium' /> <span style={myStyle.spanStyle}> {likes.length} </span> </>
   }
+
+
+  const SavedPost = () => {
+
+    if (currentUserAllSavedPost?.length > 0) {
+
+      for (let i = 0; i <= currentUserAllSavedPost.length; i++) {
+        if (post._id === currentUserAllSavedPost[i]) {
+          return <> <BookmarkIcon fontSize='medium' /> </>
+        }
+      }
+
+      return <> <BookmarkBorderIcon fontSize="medium" /> </>
+
+    } else {
+
+      if (currentUserSavedPostFromLocalStorage.length > 0) {
+
+        for (let i = 0; i <= currentUserSavedPostFromLocalStorage.length; i++) {
+          if (post._id === currentUserSavedPostFromLocalStorage[i]) {
+            return <> <BookmarkIcon fontSize='medium' /> </>
+          }
+        }
+      }
+
+      return <> <BookmarkBorderIcon fontSize="medium" /> </>
+    }
+
+  }
+
 
 
 
@@ -153,7 +240,7 @@ const Post = ({ post, setCurrentId }) => {
         <Typography style={myStyle.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
 
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p" >{  post.message.slice(0, 300) }  {post.message.length > 300 && <><Typography  onClick={handleMessageClick} sx={{ color: blue[500], cursor: "pointer" }} > Read More..... </Typography></> }  </Typography>
+          <Typography variant="body2" color="textSecondary" component="p" >{post.message.slice(0, 300)}  {post.message.length > 300 && <><Typography onClick={handleMessageClick} sx={{ color: blue[500], cursor: "pointer" }} > Read More..... </Typography></>}  </Typography>
 
 
         </CardContent>
@@ -164,18 +251,12 @@ const Post = ({ post, setCurrentId }) => {
             <Likes />
           </Button>
 
-          <Button size="small" color="primary" disabled={!user?.result}>
-            <ThumbDownOffAltIcon fontSize="medium" />
-          </Button>
+          <Button size="small" onClick={handleSavePost} color="primary" disabled={!user?.result} >
 
-          <Button size="small" color="primary" disabled={!user?.result} >
-              <BookmarkAddIcon fontSize="medium" />
+            <SavedPost />
           </Button>
 
           {post.creator === user?.result._id && (<Button size="small" color="primary" onClick={handleDeletePost} >  <DeleteIcon fontSize="medium" /> </Button>)}
-
-
-
 
         </CardActions>
       </Card>
@@ -183,6 +264,5 @@ const Post = ({ post, setCurrentId }) => {
   )
 }
 
-{/* <Link to={`/posts/post/${post._id}`}> read more...</Link> */}
 
 export default Post;

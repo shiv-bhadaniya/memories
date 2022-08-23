@@ -14,7 +14,6 @@ baseAPI.interceptors.request.use((req) => {
       }`;
     }
   
-    console.log(req);
     return req;
   });
 
@@ -26,9 +25,10 @@ export const likePost = (id) => baseAPI.patch(`/posts/like/${id}`);
 export const deletePost = (id) => baseAPI.delete(`/posts/delete/${id}`); 
 export const getOnePostDetails = (id) => baseAPI.get(`/posts/post/${id}`);
 
-
 export const signup = (newUserData) => baseAPI.post("/user/auth/signup", newUserData);
 export const signin = (userData) => baseAPI.post("/user/auth/signin", userData);
 
 
 export const getUserProfile = (id) => baseAPI.get(`/user/profile/${id}`);
+export const savePost = (id) => baseAPI.patch(`user/profile/post/save/${id}`);
+export const followUser = (id) => baseAPI.patch(`user/profile/follow/${id}`);

@@ -12,11 +12,12 @@ const Posts = ({setCurrentId}) => {
 
     useEffect(() => {
         dispatch(getAllPost());
-    }, [])
+    }, [currentUserAllData])
 
 
     const currnetAllPosts = useSelector((state) => state.postReducer);
-    console.log("current ALl post ", currnetAllPosts);
+    var currentUserAllData = useSelector((state) => state.userReducer);
+
     
     
 
