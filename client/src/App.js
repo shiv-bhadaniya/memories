@@ -16,6 +16,10 @@ function App() {
 
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState();
+  const [view, setView] = useState(1)
+
+
+
 
   useEffect(() => {
     dispatch(getAllPost());
@@ -25,13 +29,13 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        <Navbar setView={setView} />
         <Routes>
-          <Route path="/" element={<Posts setCurrentId={setCurrentId} />} />
+          <Route path="/" element={<Posts view={view} setCurrentId={setCurrentId} />} />
           <Route path="/posts/create" element={<Form currentId={currentId}  setCurrentId={setCurrentId} />} />
           <Route path="/user/auth" element={<Auth />} />
           <Route path="/posts/post/:id" element={ <PostDetails />} />
-          <Route path="/user/profile/:id" element={ <UserProfile /> } />
+          <Route path="/user/profile/:id" element={ <UserProfile setCurrentId={setCurrentId}/> } />
         </Routes>
 
       </BrowserRouter>

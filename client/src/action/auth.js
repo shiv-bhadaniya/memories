@@ -8,6 +8,7 @@ export const signup = (newUserData, navigate) => async(dispatch) => {
         navigate("/")
     } catch (error) {
         console.log(error);
+        alert("oops! something went wrong, please recheck details.")
     }
 }
 
@@ -19,6 +20,6 @@ export const signin = (userData, navigate) => async (dispatch) => {
         navigate("/")
     } catch (error) {
         console.log(error);
+        alert("oops! email and password mismatch")
     }
-
 }

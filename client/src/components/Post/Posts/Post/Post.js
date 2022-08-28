@@ -7,16 +7,16 @@ import moment from "moment";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePost, getAllPost, getOnePostDetails, likePost } from '../../../../action/post';
+import { deletePost, getAllPost, likePost } from '../../../../action/post';
 import { blue } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import {  savePost } from "../../../../action/user.js";
 import { getUserProfile } from "../../../../action/userDetails";
-
+import { getOnePostDetails } from "../../../../action/postDetails"
 const Post = ({ post, setCurrentId }) => {
 
-
+ 
 
   // ------------------------------------------------------------------    Hook     -------------------------------------------------------------------------
 
@@ -197,7 +197,7 @@ const Post = ({ post, setCurrentId }) => {
 
     } else {
 
-      if (currentUserSavedPostFromLocalStorage.length > 0) {
+      if (currentUserSavedPostFromLocalStorage?.length > 0) {
 
         for (let i = 0; i <= currentUserSavedPostFromLocalStorage.length; i++) {
           if (post._id === currentUserSavedPostFromLocalStorage[i]) {
