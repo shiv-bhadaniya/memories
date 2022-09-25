@@ -59,7 +59,7 @@ const UserProfile = ({setCurrentId}) => {
 
 
   var loginUserUpdatedFollowing = loginUserUpdatedProfile?.userData?.following;
-  console.log("loginUserUpdatedFollowing : ", loginUserUpdatedFollowing);
+
 
 
 

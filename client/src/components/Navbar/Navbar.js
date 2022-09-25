@@ -48,21 +48,17 @@ const Navbar = ({ setView }) => {
     }
 
     var handleAllPost = () => {
-        console.log("1");
         setTabValue("1");
 
         setView(1)
     }
 
     var handleFollowingPost = () => {
-        console.log("2");
         setTabValue("2");
         setView(2)
     }
 
     var handleSavedPost = () => {
-
-        console.log("3");
         setTabValue("3");
         setView(3);
     }

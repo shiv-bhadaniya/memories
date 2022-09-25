@@ -20,6 +20,6 @@ export const signin = (userData, navigate) => async (dispatch) => {
         navigate("/")
     } catch (error) {
         console.log(error);
-        alert("oops! email and password mismatch")
+        alert("oops! email and password missmatch")
     }
 }

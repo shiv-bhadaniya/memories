@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Post from "./Post/Post";
@@ -13,7 +13,6 @@ const Posts = ({ setCurrentId, view }) => {
     
     
     const currnetAllPosts = useSelector((state) => state.postReducer);
-    console.log("currnetAllPosts : ", currnetAllPosts);
     var data = useSelector((state) => state.userReducer);
     var currentUserAllData = data?.userData;
     var currentUserSavesdPost = currentUserAllData?.savedPost;
@@ -27,7 +26,6 @@ const Posts = ({ setCurrentId, view }) => {
 
     var allPost = []
 
-    console.log(view);
     
     useEffect(() => {
         dispatch(getAllPost());
@@ -88,7 +86,6 @@ const Posts = ({ setCurrentId, view }) => {
 
             if (currnetAllPosts.length !== 0) {
                 for (let i = 0; i < currnetAllPosts?.length; i++) {
-                    console.log("i : ", i);
                     for (let j = 0; j < currentUserSavedPostFromLS?.length; j++) {
                         if (currnetAllPosts[i]._id === currentUserSavedPostFromLS[j]) {
                             allPost.push(currnetAllPosts[i]);
@@ -99,20 +96,18 @@ const Posts = ({ setCurrentId, view }) => {
         }
     }
 
-    console.log("allPost : ", allPost);
 
 
     return (
         allPost.length ? (
             <Grid spacing={3} container alignItems="stretch">
                 {allPost.map((post) => (
-                    // md = big, xs = small, sm = medium
                     <Grid style={myStyle.myMargin} key={post._id} item xs={12} sm={6} md={3}>
                         <Post post={post} setCurrentId={setCurrentId} />
                     </Grid>
                 ))}
             </Grid>
-        ) : <CircularProgress />
+        ) : ( view === 1 ? <CircularProgress /> : (allPost.length === 0 ?  <Typography>Oops! No post available</Typography>  :  <CircularProgress />) )
     )
 }
 

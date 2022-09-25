@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
     password : { type: String, required: true },
     id : { type: String },
     following: { type: [String], default: [] },
-    followers: { type: [String], default: [] },
     savedPost: {type : [String], default: []},
 });
 
